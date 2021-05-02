@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyobo.stats.dao.mapper.cstmmst.ProgramAuthMapper">
+	<sql id ="programAuthWhereStatement">
+		<if test="PgmID != null">
+			AND  PgmID = #{PgmID}
+		</if>
+		<if test="UserID != null">
+			AND  UserID= #{UserID}
+		</if>
+		
+		<if test="RgstUserID != null">
+			AND  RgstUserID= #{RgstUserID}
+		</if>
+	</sql>
+	
+	<select id="getProgramAuths" parameterType="com.kyobo.stats.model.ProgramAuth"  resultType="com.kyobo.stats.model.ProgramAuth">
+			SELECT 
+			  *
+			FROM 
+				T_ProgramAuth
+			WHERE 
+				1 = 1
+				<include refid = "programAuthWhereStatement"/>
+	</select>
+	
+	<insert id="insertProgramAuth" parameterType="com.kyobo.stats.model.ProgramAuth" >
+		INSERT INTO T_ProgramAuth(
+			PgmID,
+			UserID,
+			RgstUserID,
+			DtRgst
+			)
+		VALUES (
+			#{PgmID},
+			#{UserID},
+			#{RgstUserID},
+			GETDATE()
+		)
+	</insert>
+	
+	<insert id="insertProgramAuthBatch" >
+		INSERT INTO T_ProgramAuth(
+			PgmID,
+			UserID,
+			RgstUserID,
+			DtRgst
+			)
+		VALUES (
+			#{PgmID},
+			#{UserID},
+			#{RgstUserID},
+			GETDATE()
+		)
+	</insert>
+	
+	<delete id="deleteProgramAuth" parameterType="com.kyobo.stats.model.ProgramAuth" >
+		DELETE FROM T_ProgramAuth WHERE  1 = 1 <include refid = "programAuthWhereStatement"/>
+	</delete>
+</mapper>

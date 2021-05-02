@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyobo.stats.dao.mapper.cstmmst.ProgramMapper">
+	<sql id ="programWhereStatement">
+		<if test="PgmID != null">
+			AND  PgmID = #{PgmID}
+		</if>
+		<if test="UseYN != null">
+			AND  UseYN= #{UseYN}
+		</if>
+	</sql>
+	
+	<select id="getPrograms" parameterType="com.kyobo.stats.model.Program"  resultType="com.kyobo.stats.model.Program">
+			SELECT 
+			  *
+			FROM 
+				T_Program
+			WHERE 
+				1 = 1
+				<include refid = "programWhereStatement"/>
+	</select>
+	
+	<insert id="insertProgram" parameterType="com.kyobo.stats.model.Program" >
+	</insert>
+	
+	<update id="updateProgram" parameterType="com.kyobo.stats.model.Program" >
+	</update>
+	
+	<delete id="deleteProgram" parameterType="com.kyobo.stats.model.ProgramAuth" >
+	</delete>
+</mapper>

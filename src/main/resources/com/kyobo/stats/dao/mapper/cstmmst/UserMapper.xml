@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyobo.stats.dao.mapper.cstmmst.UserMapper">
+	<sql id ="userWhere">
+		<if test="UserID != null">
+			AND  UserID = #{UserID}
+		</if>
+		<if test="UserNM != null">
+			AND  UserNM LIKE '%' + #{UserNM} + '%'
+		</if>
+	</sql>
+	
+	<select id="getUsers" parameterType="com.kyobo.stats.model.User"  resultType="com.kyobo.stats.model.User">
+			SELECT 
+			  *
+			FROM 
+				T_User
+			WHERE 
+				1 = 1
+				<include refid = "userWhere"/>
+	</select>
+	
+	<insert id="insertUser" parameterType="com.kyobo.stats.model.User" >
+		INSERT INTO T_User (
+			UserID,
+			UserNM,
+			UserPWD,
+			PWDErrCnt,
+			LockYN,
+			DtRgst
+			)
+		VALUES (
+			#{UserID},
+			#{UserNM},
+			#{UserPWD},
+			0,
+			'N',
+			GETDATE()
+		)
+	</insert>
+	
+	<update id="updateUser" parameterType="com.kyobo.stats.model.User" >
+		UPDATE T_User SET
+			UserID = #{UserID},
+			UserNM = #{UserNM},
+			UserPWD = #{UserPWD},
+			PWDErrCnt = #{PWDErrCnt},
+			PWDErrDt = #{PWDErrDt},
+			LockYN = #{LockYN},
+			DtRgst = #{DtRgst}
+		WHERE UserID = #{UserID}
+	</update>
+	
+	<delete id="deleteUser" parameterType="com.kyobo.stats.model.User" >
+		DELETE FROM T_User WHERE UserID= #{UserID}
+	</delete>
+	
+</mapper>
